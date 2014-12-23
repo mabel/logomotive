@@ -8,6 +8,7 @@ module.exports = function() {
 		this.use(express.logger());
 	}
 	this.use(poweredBy('Locomotive'));
+	//this.use(validator());
 	this.use(express.favicon());
 	this.use(express.static(__dirname + '/../../public'));
 	this.use(bodyParser.json());
@@ -16,4 +17,5 @@ module.exports = function() {
 	this.use(methodOverride());
 	this.use(this.router);
 	this.use(express.errorHandler());
+	//this.validator = validator
 }

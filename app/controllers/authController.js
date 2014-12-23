@@ -3,6 +3,11 @@ var locomotive = require('locomotive')
 
 var authController = new Controller();
 
+authController.before('login', function(next){
+	var validate = this.getValidator()
+	validate(this.req, this.res, next)
+})
+
 authController.login = function() {
 	var flux = this.__app.flux
 	var req = this.req
@@ -14,12 +19,9 @@ authController.login = function() {
 		return
 	}
 	var payload = {username: username, password: password, callback: function(user, uuid){
-		console.log(user)
-		console.log(uuid)
 		if(user){
 		   	req.session.uuid = uuid
 			flux.dispatcher.dispatch({type: 'load', payload: {id: user, uuid: uuid, changed: false, timestamp: new Date().getTime(), inuse: true, callback: function(data){
-				console.log(data)
 				res.redirect('/user')
 			}}})
 			return

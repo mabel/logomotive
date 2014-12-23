@@ -1,7 +1,12 @@
+var validator  = require('validator')
 var locomotive = require('locomotive')
   , Controller = locomotive.Controller;
 
 var userController = new Controller();
+
+//userController.before('*', function(next){
+//	validator(this.req, this.res, next)
+//})
 
 userController.about = function() {
 	var req = this.req
@@ -10,7 +15,6 @@ userController.about = function() {
 	var store = flux.store('Users')
 	var uuid = req.session.uuid
 	var inst = store.getInstance(uuid)
-	console.log(inst)
 	if(!uuid || !inst){
 		res.redirect('/nologin')
 		return
